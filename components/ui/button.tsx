@@ -10,6 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: 'bg-primary web:hover:opacity-90 active:opacity-90',
+        primary: 'bg-brand web:hover:opacity-90 active:opacity-90',
         destructive: 'bg-destructive web:hover:opacity-90 active:opacity-90',
         outline:
           'border border-input bg-background web:hover:bg-accent web:hover:text-accent-foreground active:bg-accent',
@@ -37,11 +38,12 @@ const buttonTextVariants = cva(
     variants: {
       variant: {
         default: 'text-primary-foreground',
+        primary: 'text-white text-primary-foreground',
         destructive: 'text-destructive-foreground',
         outline: 'group-active:text-accent-foreground',
         secondary: 'text-secondary-foreground group-active:text-secondary-foreground',
         ghost: 'group-active:text-accent-foreground',
-        link: 'text-primary group-active:underline',
+        link: 'text-primary underline',
       },
       size: {
         default: '',
