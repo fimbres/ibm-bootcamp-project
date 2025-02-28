@@ -1,6 +1,5 @@
-import * as React from "react";
-import { ScrollView, View, VirtualizedList } from "react-native";
-import { FolderArchiveIcon } from "lucide-react-native";
+import { useMemo } from "react";
+import { View } from "react-native";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -12,14 +11,11 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
-import { Skeleton } from "~/components/ui/skeleton";
-import PostCard from "~/components/PostCard";
+import PostList from "~/components/PostList";
 
 import { useAuth } from "~/providers/auth.provider";
 import { PostService } from "~/services/post.service";
 import { getInitials } from "~/lib/utils";
-import { Post } from "~/types/db";
-import PostList from "~/components/PostList";
 
 const GITHUB_AVATAR_URI =
   "https://i.pinimg.com/originals/ef/a2/8d/efa28d18a04e7fa40ed49eeb0ab660db.jpg";
@@ -38,6 +34,7 @@ export default function MyProfileScreen() {
       return response.data || [];
     }
   });
+  const myPosts = useMemo(() => data.filter(p => p.user.email === user?.email), [data]);
 
   return (
     <View className="flex-1 gap-5 bg-secondary/30">
@@ -69,15 +66,15 @@ export default function MyProfileScreen() {
             </View>
             <View className="items-center flex-1">
               <Text className="text-sm text-muted-foreground">Publicaciones</Text>
-              <Text className="text-xl font-semibold">{0}</Text>
+              <Text className="text-xl font-semibold">{myPosts.length || 0}</Text>
             </View>
           </View>
         </CardContent>
       </Card>
-      <PostList 
+      <PostList
         isLoading={isLoading}
         isFeed={false}
-        data={data}
+        data={myPosts}
         emptyMessage="No has creado publicaciones aún."
       />
     </View>
