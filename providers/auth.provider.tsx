@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import React, {
   createContext,
   useState,
@@ -36,6 +37,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     useStorageState("token");
   const [isLoading, setIsLoading] = useState(true);
   const authService = new AuthService();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (isLoadinUser || isLoadingToken) return;
@@ -84,6 +86,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setStoredUser(JSON.stringify(userData));
         setToken(response.data?.token!);
         setStoredToken(response.data?.token!);
+        //@ts-ignore
+        queryClient?.refetchQueries(["posts", "feed"]);
       } catch (error: any) {
         console.error("Sign-in error:", error.message);
         throw error;
@@ -110,6 +114,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setStoredUser(JSON.stringify(userData));
         setToken(response.data?.token!);
         setStoredToken(response.data?.token!);
+        //@ts-ignore
+        queryClient?.refetchQueries(["posts", "feed"]);
       } catch (error: any) {
         console.error("Registration error:", error.message);
         throw error;
