@@ -1,9 +1,9 @@
 import React from "react";
+import { View } from "react-native";
 import { Link, Tabs, router } from "expo-router";
 import { BellDotIcon, HomeIcon, PlusIcon, UserIcon } from "lucide-react-native";
 
 import { ThemeToggle } from "~/components/ThemeToggle";
-import { View } from "react-native";
 
 export default function TabLayout() {
   return (
