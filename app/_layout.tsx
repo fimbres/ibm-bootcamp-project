@@ -7,6 +7,10 @@ import {
 } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { PortalHost } from "@rn-primitives/portal";
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 
 import { NAV_THEME } from "~/lib/constants";
 import { useColorScheme } from "~/lib/useColorScheme";
@@ -23,15 +27,18 @@ const DARK_THEME: Theme = {
 };
 
 export default function AppRoot() {
+  const queryClient = new QueryClient();
   const { isDarkColorScheme } = useColorScheme();
 
   return (
-    <AuthProvider>
-      <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-        <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-        <PortalHost />
-        <Slot />
-      </ThemeProvider>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+          <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+          <PortalHost />
+          <Slot />
+        </ThemeProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
