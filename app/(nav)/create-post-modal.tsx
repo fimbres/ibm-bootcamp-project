@@ -4,8 +4,6 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Cloudinary } from "@cloudinary/url-gen";
-import { upload } from "cloudinary-react-native";
 
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -15,20 +13,11 @@ import ImagePickerInput from "~/components/ImagePicker";
 
 import { useAuth } from "~/providers/auth.provider";
 import { CreatePostInput, PostService } from "~/services/post.service";
-import { fileToBase64 } from "~/lib/utils";
+import { uploadImageToCloudinary } from "~/lib/utils";
 
 const schema = z.object({
   content: z.string().min(1, { message: "Escríbe algo." }),
   file: z.any().optional(),
-});
-
-const cld = new Cloudinary({
-  cloud: {
-    cloudName: process.env.EXPO_PUBLIC_CLOUDINARY_NAME,
-  },
-  url: {
-    secure: true,
-  },
 });
 
 export default function Screen() {
@@ -59,23 +48,7 @@ export default function Screen() {
       let public_id: string | undefined = undefined;
 
       if (data.file) {
-        const base64Image = await fileToBase64(data.file);
-
-        await upload(cld, {
-          file: base64Image,
-          options: {
-            unsigned: true,
-          },
-          callback: (error, response) => {
-            if (error) {
-              console.error(error);
-            }
-
-            public_id = response?.public_id!;
-          },
-        });
-
-        console.log(public_id);
+        public_id = await uploadImageToCloudinary(data.file?.uri);
       }
 
       mutate({
@@ -86,7 +59,7 @@ export default function Screen() {
 
       router.back();
     } catch (error) {
-      console.error("aqui", error);
+      console.error(error);
     }
   };
 
