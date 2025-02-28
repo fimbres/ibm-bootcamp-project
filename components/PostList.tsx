@@ -8,6 +8,7 @@ import PostCard from "./PostCard";
 import { Post } from "~/types/db";
 
 interface PostListProps {
+  title?: string;
   data: Post[];
   isLoading: boolean;
   isFeed: boolean;
@@ -15,6 +16,7 @@ interface PostListProps {
 }
 
 const PostList: React.FC<PostListProps> = ({
+  title,
   isFeed,
   isLoading,
   data,
@@ -39,6 +41,7 @@ const PostList: React.FC<PostListProps> = ({
       initialNumToRender={4}
       renderItem={({ item }) => <PostCard post={item} isFeed={isFeed} />}
       contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 16, gap: 16 }}
+      ListHeaderComponent={() => title ? <Text className="font-semibold text-2xl text-accent-foreground">{title}</Text> : null}
       ListEmptyComponent={() => (
         <View
           style={{

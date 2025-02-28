@@ -35,7 +35,9 @@ export default function MyProfileScreen() {
     },
   });
   const myPosts = useMemo(
-    () => data.filter((p) => p.user.email === user?.email),
+    () => data
+      .filter((p) => p.user.email === user?.email)
+      .sort((a, b) =>  new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()),
     [data]
   );
 
