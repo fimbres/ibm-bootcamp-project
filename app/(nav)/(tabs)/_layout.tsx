@@ -1,11 +1,15 @@
 import React from "react";
 import { View } from "react-native";
 import { Link, Tabs, router } from "expo-router";
-import { BellDotIcon, HomeIcon, PlusIcon, UserIcon } from "lucide-react-native";
+import { BellDotIcon, HomeIcon, LogOutIcon, PlusIcon, UserIcon } from "lucide-react-native";
 
 import { ThemeToggle } from "~/components/ThemeToggle";
 
+import { useAuth } from "~/providers/auth.provider";
+
 export default function TabLayout() {
+  const { signOut } = useAuth();
+
   return (
     <Tabs
       initialRouteName="index"
@@ -48,7 +52,7 @@ export default function TabLayout() {
         options={{
           title: "Mi Perfil",
           tabBarIcon: (props) => <UserIcon {...props} />,
-          headerRight: () => <ThemeToggle />,
+          headerRight: () => <LogOutIcon color="red" onPress={signOut} />,
         }}
       />
     </Tabs>
