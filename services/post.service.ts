@@ -1,6 +1,4 @@
-import {
-  QueryClient,
-} from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 import { ApiResponse, ApiService } from "./api.service";
 import { Post } from "~/types/db";
 
@@ -22,16 +20,11 @@ export class PostService extends ApiService {
   async createPost(data: CreatePostInput): Promise<ApiResponse<Post>> {
     const { token, ...rest } = data;
 
-    return this.request(
-      "POST",
-      "/posts",
-      token!,
-      { 
-        ...rest,
-        likes: [],
-        comments: [],
-      }
-    );
+    return this.request("POST", "/posts", token!, {
+      ...rest,
+      likes: [],
+      comments: [],
+    });
   }
 
   async getFeed(sessionToken: string): Promise<ApiResponse<Post[]>> {

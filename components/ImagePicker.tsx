@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { CameraIcon, XIcon } from 'lucide-react-native';
-import * as ImagePicker from 'expo-image-picker';
+import React, { useEffect, useState } from "react";
+import { View, Text, TouchableOpacity, Image } from "react-native";
+import { CameraIcon, XIcon } from "lucide-react-native";
+import * as ImagePicker from "expo-image-picker";
 
 interface ImagePickerProps {
   value?: ImagePicker.ImagePickerAsset;
@@ -10,8 +10,15 @@ interface ImagePickerProps {
   onCancel: () => void;
 }
 
-const ImagePickerInput: React.FC<ImagePickerProps> = ({ value, onChange, onBlur, onCancel }) => {
-  const [image, setImage] = useState<ImagePicker.ImagePickerAsset | undefined>(undefined);
+const ImagePickerInput: React.FC<ImagePickerProps> = ({
+  value,
+  onChange,
+  onBlur,
+  onCancel,
+}) => {
+  const [image, setImage] = useState<ImagePicker.ImagePickerAsset | undefined>(
+    undefined
+  );
   const [imageUri, setImageUri] = useState<string | undefined>(undefined);
 
   useEffect(() => {
@@ -54,19 +61,15 @@ const ImagePickerInput: React.FC<ImagePickerProps> = ({ value, onChange, onBlur,
           </TouchableOpacity>
           <Image
             source={{ uri: imageUri }}
-            className='w-[180px] h-[180px] rounded-[15px]'
+            className="w-[180px] h-[180px] rounded-[15px]"
           />
         </>
       ) : (
         <View className="justify-center items-center">
-          <View
-            className="w-[60px] h-[60px] rounded-full justify-center items-center"
-          >
+          <View className="w-[60px] h-[60px] rounded-full justify-center items-center">
             <CameraIcon size={40} color="white" />
           </View>
-          <Text
-            className="mt-[10px] text-center text-accent-foreground"
-          >
+          <Text className="mt-[10px] text-center text-accent-foreground">
             Selecciona Una Imagen
           </Text>
         </View>

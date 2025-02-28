@@ -46,7 +46,10 @@ export default function NavLayout() {
     <Stack>
       <Stack.Screen name="(auth)" options={{ headerShown: false }} />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="create-post-modal" options={{ headerShown: false, presentation: "modal" }} />
+      <Stack.Screen
+        name="create-post-modal"
+        options={{ headerShown: false, presentation: "modal" }}
+      />
     </Stack>
   );
 }

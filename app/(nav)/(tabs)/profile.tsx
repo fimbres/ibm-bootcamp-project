@@ -27,14 +27,17 @@ export default function MyProfileScreen() {
     queryKey: ["posts", token],
     queryFn: async () => {
       const response = await postService.readPosts(token!);
-      
+
       if (response.error) {
         throw new Error(response.error);
       }
       return response.data || [];
-    }
+    },
   });
-  const myPosts = useMemo(() => data.filter(p => p.user.email === user?.email), [data]);
+  const myPosts = useMemo(
+    () => data.filter((p) => p.user.email === user?.email),
+    [data]
+  );
 
   return (
     <View className="flex-1 gap-5 bg-secondary/30">
@@ -47,7 +50,9 @@ export default function MyProfileScreen() {
             </AvatarFallback>
           </Avatar>
           <View className="p-3" />
-          <CardTitle className="pb-2 text-center">{user?.name.includes("@") ? "Rick Martínez" : user?.name}</CardTitle>
+          <CardTitle className="pb-2 text-center">
+            {user?.name.includes("@") ? "Rick Martínez" : user?.name}
+          </CardTitle>
           <View className="flex-row">
             <CardDescription className="text-base font-semibold">
               {user?.email}
@@ -65,8 +70,12 @@ export default function MyProfileScreen() {
               <Text className="text-xl font-semibold">{0}</Text>
             </View>
             <View className="items-center flex-1">
-              <Text className="text-sm text-muted-foreground">Publicaciones</Text>
-              <Text className="text-xl font-semibold">{myPosts.length || 0}</Text>
+              <Text className="text-sm text-muted-foreground">
+                Publicaciones
+              </Text>
+              <Text className="text-xl font-semibold">
+                {myPosts.length || 0}
+              </Text>
             </View>
           </View>
         </CardContent>

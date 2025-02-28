@@ -1,7 +1,13 @@
 import React from "react";
 import { View } from "react-native";
 import { Link, Tabs, router } from "expo-router";
-import { BellDotIcon, HomeIcon, LogOutIcon, PlusIcon, UserIcon } from "lucide-react-native";
+import {
+  BellDotIcon,
+  HomeIcon,
+  LogOutIcon,
+  PlusIcon,
+  UserIcon,
+} from "lucide-react-native";
 
 import { ThemeToggle } from "~/components/ThemeToggle";
 
@@ -24,7 +30,7 @@ export default function TabLayout() {
           title: "Inicio",
           headerLeftContainerStyle: { paddingLeft: 10 },
           tabBarIcon: (props) => <HomeIcon {...props} />,
-          headerLeft: () => <BellDotIcon color='grey' />,
+          headerLeft: () => <BellDotIcon color="grey" />,
           headerRight: () => <ThemeToggle />,
         }}
       />
@@ -39,9 +45,9 @@ export default function TabLayout() {
         options={{
           headerShown: false,
           tabBarIcon: () => (
-            <Link href='/create-post-modal' asChild>
+            <Link href="/create-post-modal" asChild>
               <View className="flex justify-center items-center w-16 h-16 bg-brand rounded-full">
-                <PlusIcon size={28} color='white' />
+                <PlusIcon size={28} color="white" />
               </View>
             </Link>
           ),

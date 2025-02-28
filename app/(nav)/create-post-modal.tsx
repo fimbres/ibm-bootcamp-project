@@ -24,11 +24,11 @@ const schema = z.object({
 
 const cld = new Cloudinary({
   cloud: {
-    cloudName: process.env.EXPO_PUBLIC_CLOUDINARY_NAME
+    cloudName: process.env.EXPO_PUBLIC_CLOUDINARY_NAME,
   },
   url: {
-    secure: true
-  }
+    secure: true,
+  },
 });
 
 export default function Screen() {
@@ -50,7 +50,7 @@ export default function Screen() {
     },
     onSuccess: () => {
       //@ts-ignore
-      queryClient.invalidateQueries(['posts', 'feed']);
+      queryClient.invalidateQueries(["posts", "feed"]);
     },
   });
 
@@ -58,33 +58,32 @@ export default function Screen() {
     try {
       let public_id: string | undefined = undefined;
 
-      if(data.file) {
+      if (data.file) {
         const base64Image = await fileToBase64(data.file);
-  
-        await upload(cld, { 
+
+        await upload(cld, {
           file: base64Image,
-           options: {
+          options: {
             unsigned: true,
-           }, 
-           callback: (error, response) => {
-              if(error) {
-                console.error(error);
-              }
-    
-              public_id = response?.public_id!;
+          },
+          callback: (error, response) => {
+            if (error) {
+              console.error(error);
             }
-          })
+
+            public_id = response?.public_id!;
+          },
+        });
 
         console.log(public_id);
       }
-  
-  
+
       mutate({
         text: data.content,
         media: public_id,
         token,
       });
-  
+
       router.back();
     } catch (error) {
       console.error("aqui", error);
@@ -120,7 +119,7 @@ export default function Screen() {
               value={value}
               onBlur={onBlur}
               onChange={onChange}
-              onCancel={() => onChange(undefined)}              
+              onCancel={() => onChange(undefined)}
             />
           </>
         )}

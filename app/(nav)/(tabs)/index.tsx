@@ -12,7 +12,7 @@ import { PostService } from "~/services/post.service";
 import { getInitials } from "~/lib/utils";
 
 const GITHUB_AVATAR_URI =
-"https://i.pinimg.com/originals/ef/a2/8d/efa28d18a04e7fa40ed49eeb0ab660db.jpg";
+  "https://i.pinimg.com/originals/ef/a2/8d/efa28d18a04e7fa40ed49eeb0ab660db.jpg";
 
 export default function Screen() {
   const postService = new PostService();
@@ -21,12 +21,12 @@ export default function Screen() {
     queryKey: ["feed", token],
     queryFn: async () => {
       const response = await postService.getFeed(token!);
-      
+
       if (response.error) {
         throw new Error(response.error);
       }
       return response.data || [];
-    }
+    },
   });
 
   return (
@@ -38,7 +38,12 @@ export default function Screen() {
             <Text>{getInitials(user?.name)}</Text>
           </AvatarFallback>
         </Avatar>
-        <Input className="flex-1" placeholder="Escribe algo..." editable={false} onPress={() => router.push("/(nav)/create-post-modal")} />
+        <Input
+          className="flex-1"
+          placeholder="Escribe algo..."
+          editable={false}
+          onPress={() => router.push("/(nav)/create-post-modal")}
+        />
       </View>
       <PostList
         isLoading={isLoading}

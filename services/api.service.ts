@@ -34,9 +34,11 @@ export class ApiService {
         method,
         url,
         data,
-        headers: sessionToken ? {
-          Authorization: `Bearer ${sessionToken}`,
-        } : undefined,
+        headers: sessionToken
+          ? {
+              Authorization: `Bearer ${sessionToken}`,
+            }
+          : undefined,
         ...config,
       });
       console.log("response", response);

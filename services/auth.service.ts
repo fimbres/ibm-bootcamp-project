@@ -27,6 +27,6 @@ export class AuthService extends ApiService {
   }
 
   async register(data: RegisterInput): Promise<ApiResponse<AuthResponse>> {
-    return this.request("POST", "/auth/register",undefined, data);
+    return this.request("POST", "/auth/register", undefined, data);
   }
 }

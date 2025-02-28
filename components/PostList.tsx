@@ -1,11 +1,11 @@
-import React from 'react';
-import { View, Text, VirtualizedList } from 'react-native';
-import { FolderArchiveIcon } from 'lucide-react-native';
+import React from "react";
+import { View, Text, VirtualizedList } from "react-native";
+import { FolderArchiveIcon } from "lucide-react-native";
 
-import { Skeleton } from './ui/skeleton';
-import PostCard from './PostCard';
+import { Skeleton } from "./ui/skeleton";
+import PostCard from "./PostCard";
 
-import { Post } from '~/types/db';
+import { Post } from "~/types/db";
 
 interface PostListProps {
   data: Post[];
@@ -14,7 +14,12 @@ interface PostListProps {
   emptyMessage: string;
 }
 
-const PostList: React.FC<PostListProps> = ({ isFeed, isLoading, data, emptyMessage }) => {
+const PostList: React.FC<PostListProps> = ({
+  isFeed,
+  isLoading,
+  data,
+  emptyMessage,
+}) => {
   if (isLoading) {
     return (
       <View style={{ flex: 1, gap: 16 }}>
@@ -35,9 +40,18 @@ const PostList: React.FC<PostListProps> = ({ isFeed, isLoading, data, emptyMessa
       renderItem={({ item }) => <PostCard post={item} isFeed={isFeed} />}
       contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 16, gap: 16 }}
       ListEmptyComponent={() => (
-        <View style={{ flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+        <View
+          style={{
+            flex: 1,
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <FolderArchiveIcon color="grey" size={100} />
-          <Text style={{ fontWeight: '600', color: '#6b7280', marginTop: 16 }}>{emptyMessage}</Text>
+          <Text style={{ fontWeight: "600", color: "#6b7280", marginTop: 16 }}>
+            {emptyMessage}
+          </Text>
         </View>
       )}
       ListFooterComponent={<View style={{ marginBottom: 40 }} />}
