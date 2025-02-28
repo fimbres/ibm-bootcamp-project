@@ -60,7 +60,6 @@ const PostCard: FC<PostCardProps> = ({ post, isFeed }) => {
             </Button>
           )}
         </View>
-        (
         {showDescription && (
           <View className="w-full px-2 gap-2">
             {post.comments.map((c) => (
@@ -68,7 +67,6 @@ const PostCard: FC<PostCardProps> = ({ post, isFeed }) => {
             ))}
           </View>
         )}
-        )
       </CardFooter>
     </Card>
   );
