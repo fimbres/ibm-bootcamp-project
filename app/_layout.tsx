@@ -1,14 +1,17 @@
-import '~/global.css';
+import { Slot } from "expo-router";
+import {
+  ThemeProvider,
+  DarkTheme,
+  DefaultTheme,
+  Theme,
+} from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
+import { PortalHost } from "@rn-primitives/portal";
 
-import { DarkTheme, DefaultTheme, Theme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import { Platform } from 'react-native';
-import { NAV_THEME } from '~/lib/constants';
-import { useColorScheme } from '~/lib/useColorScheme';
-import { PortalHost } from '@rn-primitives/portal';
-import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { NAV_THEME } from "~/lib/constants";
+import { useColorScheme } from "~/lib/useColorScheme";
+
+import { AuthProvider } from "~/providers/auth.provider";
 
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
@@ -19,45 +22,16 @@ const DARK_THEME: Theme = {
   colors: NAV_THEME.dark,
 };
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
-
-export default function RootLayout() {
-  const hasMounted = useRef(false);
-  const { colorScheme, isDarkColorScheme } = useColorScheme();
-  const [isColorSchemeLoaded, setIsColorSchemeLoaded] = useState(false);
-
-  useIsomorphicLayoutEffect(() => {
-    if (hasMounted.current) {
-      return;
-    }
-
-    if (Platform.OS === 'web') {
-      // Adds the background color to the html element to prevent white background on overscroll.
-      document.documentElement.classList.add('bg-background');
-    }
-    setAndroidNavigationBar(colorScheme);
-    setIsColorSchemeLoaded(true);
-    hasMounted.current = true;
-  }, []);
-
-  if (!isColorSchemeLoaded) {
-    return null;
-  }
+export default function AppRoot() {
+  const { isDarkColorScheme } = useColorScheme();
 
   return (
-    <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-      <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
-      <Stack>
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
-      <PortalHost />
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+        <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+        <PortalHost />
+        <Slot />
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
-
-const useIsomorphicLayoutEffect =
-  Platform.OS === 'web' && typeof window === 'undefined' ? useEffect : useLayoutEffect;
