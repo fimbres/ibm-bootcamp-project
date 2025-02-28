@@ -1,35 +1,35 @@
-declare module '*.png' {
+declare module "*.png" {
   const value: ImageSourcePropType;
   export default value;
 }
 
-declare module '*.jpg' {
+declare module "*.jpg" {
   const value: ImageSourcePropType;
   export default value;
 }
 
-declare module '*.jpeg' {
+declare module "*.jpeg" {
   const value: ImageSourcePropType;
   export default value;
 }
 
-declare module '*.gif' {
+declare module "*.gif" {
   const value: ImageSourcePropType;
   export default value;
 }
 
-declare module '*.svg' {
-  import React from 'react';
+declare module "*.svg" {
+  import React from "react";
   const ReactComponent: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
   export default ReactComponent;
 }
 
-declare module '*.webp' {
+declare module "*.webp" {
   const value: ImageSourcePropType;
   export default value;
 }
 
-declare module '*.avif' {
+declare module "*.avif" {
   const value: ImageSourcePropType;
   export default value;
 }

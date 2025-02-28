@@ -4,9 +4,7 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "*"
-      ]
+      "~/*": ["*"]
     },
     "typeRoots": ["./node_modules/@types", "./global.d.ts"]
   },
