@@ -1,4 +1,5 @@
 import { QueryClient } from "@tanstack/react-query";
+
 import { ApiResponse, ApiService } from "./api.service";
 import { Post } from "~/types/db";
 
@@ -31,19 +32,31 @@ export class PostService extends ApiService {
     return this.request("GET", "/posts/feed", sessionToken);
   }
 
-  async findPostsByUserId(userId: string): Promise<ApiResponse<any[]>> {
-    return this.request("GET", `/api/v1/posts/users/${userId}`);
+  async findPostsByUserId(token: string, userId: string): Promise<ApiResponse<any[]>> {
+    return this.request("GET", `/posts/users/${userId}`,token);
   }
 
-  async deletePost(postId: string): Promise<ApiResponse<any>> {
-    return this.request("DELETE", `/api/v1/posts/${postId}`);
+  async deletePost(token: string, postId: string): Promise<ApiResponse<any>> {
+    return this.request("DELETE", `/posts/${postId}`, token);
   }
 
   async updatePost(postId: string, data: any): Promise<ApiResponse<any>> {
-    return this.request("PUT", `/api/v1/posts/${postId}`, data);
+    return this.request("PUT", `/posts/${postId}`, data);
   }
 
-  async patchPost(postId: string, data: any): Promise<ApiResponse<any>> {
-    return this.request("PATCH", `/api/v1/posts/${postId}`, data);
+  async likePost(sessionToken: string, data: any) {
+    return this.request("POST", "/likes", sessionToken, data);
+  }
+
+  async unlikePost(sessionToken: string, likeId: string) {
+    return this.request("DELETE", `/likes/${likeId}`, sessionToken);
+  }
+
+  async commentPost(sessionToken: string, data: any) {
+    return this.request("POST", `/commets`, sessionToken, data);
+  }
+
+  async unCommentPost(sessionToken: string, comment: string) {
+    return this.request("DELETE", `/commets/${comment}`, sessionToken);
   }
 }
