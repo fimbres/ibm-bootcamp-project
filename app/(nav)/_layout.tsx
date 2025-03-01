@@ -50,6 +50,11 @@ export default function NavLayout() {
         name="create-post-modal"
         options={{ headerShown: false, presentation: "modal" }}
       />
+      <Stack.Screen
+        name="user-profile-modal"
+        options={{ headerShown: false, presentation: "modal" }}
+        
+      />
     </Stack>
   );
 }
