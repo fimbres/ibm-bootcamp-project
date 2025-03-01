@@ -11,6 +11,7 @@ The final project from the IBM React Academy Bootcamp. A social media app, kinda
 - API fetching.
 - Server state management with React Query.
 - Routes with Expo Router.
+- File management with Cloudinary.
 
 ## Screenshot
 
