@@ -1,5 +1,5 @@
 import { QueryClient } from "@tanstack/react-query";
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, { AxiosHeaders, AxiosInstance, AxiosRequestConfig } from "axios";
 
 export interface ApiResponse<T> {
   data: T | null;
@@ -15,9 +15,6 @@ export class ApiService {
     this.apiClient = axios.create({
       baseURL: process.env.EXPO_PUBLIC_API_URL,
       timeout: 10000,
-      headers: {
-        "Content-Type": "application/json",
-      },
     });
     this.queryClient = queryClient;
   }
@@ -30,19 +27,22 @@ export class ApiService {
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
     try {
+      const headers = new AxiosHeaders()
+        .setAuthorization(`Bearer ${sessionToken}`)
+        .setContentType("application/json");
+
+        console.log(url)
+
       const response = await this.apiClient.request<T>({
         method,
         url,
         data,
-        headers: sessionToken
-          ? {
-              Authorization: `Bearer ${sessionToken}`,
-            }
-          : undefined,
+        headers,
         ...config,
       });
-      console.log("response", response);
 
+      console.log(response.status, method, url)
+  
       return {
         data: response.data,
         error: null,
@@ -51,8 +51,9 @@ export class ApiService {
     } catch (error) {
       let errorMessage = "An unexpected error occurred.";
       let statusCode = 500;
-
+  
       if (axios.isAxiosError(error)) {
+        console.error(error);
         if (error.response) {
           errorMessage = error.response.data?.message || "Request failed";
           statusCode = error.response.status;
@@ -62,9 +63,10 @@ export class ApiService {
           errorMessage = error.message;
         }
       } else if (error instanceof Error) {
+        console.log(error)
         errorMessage = error.message;
       }
-
+  
       return {
         data: null,
         error: errorMessage,
