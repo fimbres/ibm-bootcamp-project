@@ -12,4 +12,6 @@ The final project from the IBM React Academy Bootcamp. A social media app, kinda
 - Server state management with React Query.
 - Routes with Expo Router.
 
-![Simulator Screenshot - iPhone 15 Pro - 2025-02-28 at 14 13 10](https://github.com/user-attachments/assets/bb077e59-4082-469f-abeb-292aa5cd5f3a)
+## Screenshot
+
+<img src="https://github.com/user-attachments/assets/bb077e59-4082-469f-abeb-292aa5cd5f3a" width="250px" />
