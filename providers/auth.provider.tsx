@@ -7,7 +7,7 @@ import React, {
   useCallback,
 } from "react";
 import { useStorageState } from "~/hooks/useStorageState";
-import { AuthInput, AuthService, RegisterInput } from "~/services/auth.service";
+import { AuthInput, UserService, RegisterInput } from "~/services/user.service";
 
 interface User {
   name: string;
@@ -36,7 +36,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [[isLoadingToken, storedToken], setStoredToken] =
     useStorageState("token");
   const [isLoading, setIsLoading] = useState(true);
-  const authService = new AuthService();
+  const userService = new UserService();
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -74,7 +74,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     async (data: AuthInput) => {
       setIsLoading(true);
       try {
-        const response = await authService.auth(data);
+        const response = await userService.auth(data);
         if (response.error) {
           throw new Error(response.error);
         }
@@ -95,14 +95,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setIsLoading(false);
       }
     },
-    [authService, setStoredUser, setStoredToken]
+    [userService, setStoredUser, setStoredToken]
   );
 
   const register = useCallback(
     async (data: RegisterInput) => {
       setIsLoading(true);
       try {
-        const response = await authService.register(data);
+        const response = await userService.register(data);
         if (response.error) {
           throw new Error(response.error);
         }
@@ -123,7 +123,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setIsLoading(false);
       }
     },
-    [authService, setStoredUser, setStoredToken]
+    [userService, setStoredUser, setStoredToken]
   );
 
   const signOut = useCallback(() => {

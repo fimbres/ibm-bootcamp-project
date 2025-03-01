@@ -17,7 +17,7 @@ interface AuthResponse {
   token: string;
 }
 
-export class AuthService extends ApiService {
+export class UserService extends ApiService {
   constructor(queryClient?: QueryClient) {
     super(queryClient);
   }
@@ -28,5 +28,21 @@ export class AuthService extends ApiService {
 
   async register(data: RegisterInput): Promise<ApiResponse<AuthResponse>> {
     return this.request("POST", "/auth/register", undefined, data);
+  }
+
+  async getFollowersByUserId(token: string, userId: string): Promise<ApiResponse<any>> {
+    return this.request("GET", `/users/${userId}/followers`, token);
+  }
+
+  async getFollowingByUserId(token: string, userId: string): Promise<ApiResponse<any>> {
+    return this.request("GET", `/users/${userId}/following`, token);
+  }
+
+  async followUser(token: string, data: any): Promise<ApiResponse<any>> {
+    return this.request("POST", "/follows", token, data);
+  }
+
+  async unfollowUser(token: string, userId: string): Promise<ApiResponse<any>> {
+    return this.request("DELETE", `/follows/${userId}`, token);
   }
 }
