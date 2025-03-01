@@ -10,12 +10,19 @@ export interface Like {
   user: User;
 }
 
+export interface Comment {
+  id: string;
+  post: string;
+  comment: string;
+  user: User;
+}
+
 export interface Post {
   id: string;
   media: string;
   text: string;
   likes: Like[];
-  comments: string[];
+  comments: Comment[];
   user: User;
   createdAt: string;
 }
