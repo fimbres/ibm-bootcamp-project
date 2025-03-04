@@ -1,16 +1,18 @@
-# Starter base
+# Pio App
 
-A starting point to help you set up your project quickly and use the common components provided by `react-native-reusables`. The idea is to make it easier for you to get started.
+The final project from the IBM React Academy Bootcamp. A social media app, kinda a Twitter clon.
 
 ## Features
 
-- NativeWind v4
+- UI bulit with NativeWind v4 and React Reusables.
 - Dark and light mode
-  - Android Navigation Bar matches mode
-  - Persistent mode
-- Common components
-  - ThemeToggle, Avatar, Button, Card, Progress, Text, Tooltip
+  - Android Navigation Bar matches mode.
+  - Persistent mode.
+- API fetching.
+- Server state management with React Query.
+- Routes with Expo Router.
+- File management with Cloudinary.
 
-<img src="https://github.com/mrzachnugent/react-native-reusables/assets/63797719/42c94108-38a7-498b-9c70-18640420f1bc"
-     alt="starter-base-template"
-     style="width:270px;" />
+## Screenshot
+
+<img src="https://github.com/user-attachments/assets/bb077e59-4082-469f-abeb-292aa5cd5f3a" width="250px" />
