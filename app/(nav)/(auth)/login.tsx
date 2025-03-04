@@ -38,9 +38,13 @@ export default function LoginScreen() {
   const width = Dimensions.get("screen").width / 4 || 128;
 
   const onSubmit = async (data: SchemaType) => {
-    await signIn(data);
-
-    router.push("/(nav)/(tabs)");
+    try {
+      await signIn(data);
+  
+      router.push("/(nav)/(tabs)");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

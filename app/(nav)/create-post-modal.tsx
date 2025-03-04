@@ -49,6 +49,7 @@ export default function Screen() {
 
       if (data.file) {
         public_id = await uploadImageToCloudinary(data.file?.uri);
+        console.log(data.file, data.file?.uri, public_id);
       }
 
       mutate({
