@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { View } from "react-native";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { router } from "expo-router";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -18,7 +18,7 @@ const GITHUB_AVATAR_URI =
 export default function Screen() {
   const postService = new PostService();
   const { token, user } = useAuth();
-  const { error, data: feedPosts, isLoading } = useSuspenseQuery({
+  const { data: feedPosts, isLoading } = useQuery({
     queryKey: ["feed", token],
     queryFn: async () => {
       const response = await postService.getFeed(token!);
@@ -28,8 +28,9 @@ export default function Screen() {
       }
       return response.data || [];
     },
+    enabled: !!token
   });
-  const { data: allPosts } = useSuspenseQuery({
+  const { data: allPosts } = useQuery({
     queryKey: ["posts", token],
     queryFn: async () => {
       const response = await postService.readPosts(token!);
@@ -39,10 +40,11 @@ export default function Screen() {
       }
       return response.data || [];
     },
+    enabled: !!token
   });
   const shownPosts = useMemo(
     () => (
-      !!feedPosts.length ? feedPosts : allPosts
+      !!feedPosts?.length ? feedPosts : allPosts || []
     )
       .filter((p) => p.user.email !== user?.email)
       .sort((a, b) =>  new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()),
@@ -66,7 +68,7 @@ export default function Screen() {
         />
       </View>
       <PostList
-        title={!feedPosts.length ? "Explora publicaciones" : undefined}
+        title={!feedPosts?.length ? "Explora publicaciones" : undefined}
         isLoading={isLoading}
         isFeed={true}
         data={shownPosts}

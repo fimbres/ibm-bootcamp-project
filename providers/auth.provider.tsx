@@ -1,4 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
 import React, {
   createContext,
   useState,
@@ -6,6 +5,8 @@ import React, {
   useContext,
   useCallback,
 } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+
 import { useStorageState } from "~/hooks/useStorageState";
 import { AuthInput, UserService, RegisterInput } from "~/services/user.service";
 

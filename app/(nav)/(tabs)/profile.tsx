@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { View } from "react-native";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import {
@@ -23,7 +23,7 @@ const GITHUB_AVATAR_URI =
 export default function MyProfileScreen() {
   const postService = new PostService();
   const { user, token } = useAuth();
-  const { error, data, isLoading } = useSuspenseQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["posts", token],
     queryFn: async () => {
       const response = await postService.readPosts(token!);
@@ -33,11 +33,12 @@ export default function MyProfileScreen() {
       }
       return response.data || [];
     },
+    enabled: !!token,
   });
   const myPosts = useMemo(
-    () => data
+    () => data!
       .filter((p) => p.user.email === user?.email)
-      .sort((a, b) =>  new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()),
+      .sort((a, b) =>  new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) || [],
     [data]
   );
 
