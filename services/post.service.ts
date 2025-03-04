@@ -32,15 +32,15 @@ export class PostService extends ApiService {
     return this.request("GET", "/posts/feed", sessionToken);
   }
 
-  async findPostsByUserId(token: string, userId: string): Promise<ApiResponse<any[]>> {
+  async findPostsByUserId(token: string, userId: string): Promise<ApiResponse<Post[]>> {
     return this.request("GET", `/posts/users/${userId}`,token);
   }
 
-  async deletePost(token: string, postId: string): Promise<ApiResponse<any>> {
+  async deletePost(token: string, postId: string): Promise<ApiResponse<void>> {
     return this.request("DELETE", `/posts/${postId}`, token);
   }
 
-  async updatePost(postId: string, data: any): Promise<ApiResponse<any>> {
+  async updatePost(postId: string, data: any): Promise<ApiResponse<Post>> {
     return this.request("PUT", `/posts/${postId}`, data);
   }
 
