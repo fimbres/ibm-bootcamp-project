@@ -27,11 +27,13 @@ export class ApiService {
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> {
     try {
-      const headers = new AxiosHeaders()
-        .setAuthorization(`Bearer ${sessionToken}`)
-        .setContentType("application/json");
+      const headers = new AxiosHeaders();
 
-        console.log(url)
+      if (sessionToken) {
+        headers.setAuthorization(`Bearer ${sessionToken}`);
+      }
+
+      headers.setContentType("application/json");
 
       const response = await this.apiClient.request<T>({
         method,
