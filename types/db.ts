@@ -26,5 +26,3 @@ export interface Post {
   user: User;
   createdAt: string;
 }
-
-export type Posts = Post[];
